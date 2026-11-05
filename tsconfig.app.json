@@ -1,0 +1,22 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "types": ["vite/client"],
+    "allowArbitraryExtensions": true,
+
+    /* miuix-vue 0.1.1 publishes its type files one directory deeper than
+       package.json's "exports" claims; point TS at the files that ship. */
+    "paths": {
+      "miuix-vue": ["./node_modules/miuix-vue/dist/src/index.d.ts"],
+      "miuix-vue/icons": ["./node_modules/miuix-vue/dist/src/icons/extended/index.d.ts"]
+    },
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+}

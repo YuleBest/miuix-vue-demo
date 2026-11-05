@@ -1,0 +1,356 @@
+:root {
+  font-family:
+    'MiSans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: var(--m-color-surface-container-high);
+  color: var(--m-color-on-background);
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+a {
+  color: var(--m-color-primary);
+}
+
+/* ---- App shell ---------------------------------------------------------- */
+
+/* miuix-vue renders the large-title subtitle inline; stack it under the title. */
+.m-top-app-bar__large {
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--m-color-surface);
+}
+
+.app__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__body {
+  flex: 1;
+  min-height: 0;
+}
+
+.app__nav {
+  flex: none;
+  z-index: 10;
+}
+
+.app__fab {
+  position: absolute;
+  right: 16px;
+  bottom: 84px;
+  z-index: 20;
+  box-shadow: 0 8px 24px rgb(52 130 255 / 35%);
+}
+
+/* ---- Navigation rail (tablet / desktop) --------------------------------- */
+
+.app__rail {
+  display: none;
+}
+
+.rail__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 8px 24px;
+}
+
+.rail__logo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  color: var(--m-color-on-primary);
+  background: var(--m-color-primary);
+}
+
+.rail__brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.rail__name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--m-color-on-background);
+}
+
+.rail__version {
+  font-size: var(--m-text-footnote2-size);
+  color: var(--m-color-on-surface-variant-summary);
+}
+
+.rail__items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rail__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--m-color-on-surface-variant-summary);
+  font-family: inherit;
+  font-size: var(--m-text-body2-size);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 120ms linear,
+    color 120ms linear;
+}
+
+.rail__item:hover {
+  background: var(--m-color-secondary-variant);
+}
+
+.rail__item--active {
+  background: var(--m-color-secondary-container);
+  color: var(--m-color-on-background);
+  font-weight: 600;
+}
+
+.rail__footer {
+  margin-top: auto;
+  padding: 16px 12px 0;
+  font-size: var(--m-text-footnote2-size);
+  line-height: 1.5;
+  color: var(--m-color-on-surface-variant-actions);
+}
+
+@media (min-width: 900px) {
+  .app__rail {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    width: 216px;
+    padding: 20px 12px 16px;
+    border-right: 1px solid var(--m-color-divider-line);
+    background: var(--m-color-surface);
+  }
+
+  .app__nav {
+    display: none;
+  }
+
+  .app__fab {
+    right: 24px;
+    bottom: 24px;
+  }
+
+  /* The published 0.1.1 TopAppBar is not sticky; pin the compact form on wide
+     screens so the page header stays available while the content scrolls. */
+  .app .m-top-app-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    border-bottom: 1px solid var(--m-color-divider-line);
+    background: var(--m-color-surface);
+  }
+
+  .app .m-top-app-bar__row {
+    justify-content: flex-start;
+    padding-top: 8px;
+  }
+
+  .app .m-top-app-bar__title {
+    align-items: flex-start;
+    padding-left: 24px;
+    padding-right: 72px;
+    text-align: left;
+  }
+
+  .app__body {
+    --m-scroll-area-inset-top: 64px;
+  }
+}
+
+/* ---- Shared demo layout ------------------------------------------------- */
+
+.demo-page {
+  padding: 4px 0 32px;
+}
+
+/* Cards span the page with 12px side margins (the library's mobile rhythm). */
+.demo-card {
+  margin: 0 12px 12px;
+}
+
+/* SearchBar ships `width: 100%`; with side margins that overflows to the right. */
+.m-search-bar.demo-card {
+  width: auto;
+}
+
+/* Standard TabRow has square outer corners while the contour variant is rounded.
+   Give both the same card-level radius when they sit inside a card. */
+.m-tab-row:not(.m-tab-row--contour) {
+  overflow: hidden;
+  border-radius: var(--m-radius-md);
+}
+
+.m-tab-row--contour .m-tab-row__scroll {
+  border-radius: var(--m-radius-md);
+}
+
+/* `class` lands on MiuixCard's wrapper, so reach the inner card for padding. */
+.demo-card--pad .m-card {
+  padding: 16px;
+}
+
+.demo-block {
+  margin: 0 12px 12px;
+}
+
+.demo-grow {
+  flex: 1;
+}
+
+.demo-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.demo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-row--between {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demo-btn-row {
+  display: flex;
+  gap: 12px;
+}
+
+.demo-btn-row + .demo-btn-row {
+  margin-top: 12px;
+}
+
+.demo-btn-row > .m-button {
+  flex: 1;
+  min-width: 0;
+}
+
+.demo-divider {
+  margin: 12px 0;
+}
+
+.press-card {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.press-card .m-card {
+  min-height: 96px;
+  padding: 16px;
+  justify-content: center;
+}
+
+/* ---- Responsive content grid -------------------------------------------- */
+
+/* On tablets / desktops the shell is full-bleed. Content flows into columns
+   instead of stretching a single mobile column across the viewport. */
+@media (min-width: 900px) {
+  .demo-page {
+    padding: 16px 24px 48px;
+  }
+
+  .demo-card,
+  .demo-block {
+    margin: 0 0 16px;
+  }
+
+  .demo-section > .m-small-title {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .demo-page {
+    column-count: 2;
+    column-gap: 24px;
+  }
+
+  .demo-section {
+    break-inside: avoid;
+  }
+}
+
+@media (min-width: 1440px) {
+  .demo-page {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 2200px) {
+  .demo-page {
+    column-count: 4;
+  }
+}
+
+/* ---- Route transition --------------------------------------------------- */
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.16s ease;
+}
+
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
